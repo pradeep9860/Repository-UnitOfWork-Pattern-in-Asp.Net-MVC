@@ -1,0 +1,18 @@
+CREATE PROCEDURE dbo.ReportList 
+@FromDate Date='1900-01-01',
+@ToDate Date
+as 
+if @FromDate is null
+	set @FromDate='1900-01-01';
+if @ToDate is null
+	set @ToDate=getdate();
+
+
+SELECT x.ui as UserId, z.Firstname as FirstName, z.Lastname as LastName, y.ChkIn as FirstCheckInAt, y.ChkOut LastCheckoutAt, x.TotalDuration as TotalDuration
+	FROM 
+		(SELECT SUM(ts.TimeDuration) as TotalDuration, ts.UserId as ui FROM dbo.Timesheets as ts, dbo.Users as us GROUP BY ts.UserId) as x, 
+		(SELECT min(tms.CheckInAt) as ChkIn, max(tms.CheckOutAt) as ChkOut, tms.UserId as ui FROM dbo.Timesheets as tms GROUP BY tms.UserId) as y,
+		(SELECT emp.FirstName as Firstname, emp.LastName as Lastname, emp.UserId as ui FROM dbo.Employees as emp ) as z
+	WHERE x.ui = y.ui and y.ui = z.ui and y.ChkIn BETWEEN @FromDate and @ToDate
+
+

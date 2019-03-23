@@ -1,0 +1,6 @@
+SELECT x.ui as UserId, z.Firstname as FirstName, z.Lastname as LastName, y.ChkIn as FirstCheckInAt, y.ChkOut LastCheckoutAt, x.TotalDuration as TotalDuration
+	FROM 
+		(SELECT SUM(ts.TimeDuration) as TotalDuration, ts.UserId as ui FROM dbo.Timesheets as ts, dbo.Users as us Group by ts.UserId) as x, 
+		(Select min(tms.CheckInAt) as ChkIn, max(tms.CheckOutAt) as ChkOut, tms.UserId as ui from dbo.Timesheets as tms group by tms.UserId) as y,
+		(Select emp.FirstName as Firstname, emp.LastName as Lastname, emp.UserId as ui from dbo.Employees as emp ) as z
+	WHERE x.ui = y.ui and y.ui = z.ui

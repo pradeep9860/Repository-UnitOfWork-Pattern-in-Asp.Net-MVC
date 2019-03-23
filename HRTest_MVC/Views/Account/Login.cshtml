@@ -1,0 +1,45 @@
+﻿@using HRTest_MVC.ViewModel
+@model LoginViewModel
+@{
+            ViewBag.Title = "Login";
+}
+<section>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <br/><br/>
+
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { returnUrl = ViewBag.ReturnUrl }))
+            {
+                <fieldset >
+                    <legend>Login to Continue...</legend>
+
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @if (@ViewBag.Message != null)
+                    {
+                        <div style="color:red">
+                            @ViewBag.Message
+                        </div>
+                    }
+                    <div class="form-group">
+                        @Html.LabelFor(a => a.Email)
+                        @Html.TextBoxFor(a => a.Email, new { @Class = "form-control", @Placeholder="Email" })
+                        @Html.ValidationMessageFor(a => a.Email)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(a => a.Password)
+                        @Html.PasswordFor(a => a.Password, new { @Class = "form-control", @Placeholder = "Password" })
+                        @Html.ValidationMessageFor(a => a.Password)
+                    </div>
+                    @Html.CheckBoxFor(a => a.RememberMe) Remember me.
+                    <br />
+                    <input type="submit" value="Login" class="btn btn-block" /> 
+                    
+                </fieldset>
+            }  
+        </div>
+        <div class="col-md-4"></div>
+    </div> 
+</section>
+ 

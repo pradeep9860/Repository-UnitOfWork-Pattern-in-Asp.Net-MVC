@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <div class="container">
+        <h3 class="text-center"></h3>
+        <div class="timer well text-success text-center" style="font-size:30px;"></div>
+        <p class="text-center">
+            <button class="btn btn-primary btn-lg" id="Timesheet_CheckIn" onClick="Timesheet.checkIn()">Check In</button> 
+            <button class="btn btn-warning btn-lg" id="Timesheet_CheckOut" onClick="Timesheet.checkOut()">Check Out</button> 
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <h4>Date: <strong>@DateTime.Now.ToString("MMM dd, yyyy")</strong></h4>
+    <h4>Total Time (HH:MM:SS) : <strong id="totTime"></strong></h4>
+    <hr/>
+    <table class="table">       
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Checkin Time</th>
+                <th scope="col">Checkout Time</th> 
+            </tr>
+        </thead>
+        <tbody id="TimesheetLog"> 
+            <tr>
+                <th scope="row" c></th>
+                <td>No Log found today</td>
+               <td></td> 
+            </tr>
+        </tbody>
+        <tfoot id="TotalDuration">
+
+        </tfoot>
+    </table>
+</div>
+<script src="~/Assets/Custom/GlobalScript.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () { 
+        Timesheet.init();
+    });
+</script>
